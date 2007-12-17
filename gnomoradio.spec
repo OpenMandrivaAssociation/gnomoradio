@@ -14,7 +14,6 @@ Source:		%{name}-%{version}.tar.bz2
 URL:		http://gnomoradio.org/
 License:	GPL
 Group:		Sound
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	pkgconfig ImageMagick
 BuildRequires:	libsigc++2.0-devel gtkmm2.4-devel gconfmm2.6-devel
 BuildRequires:	libxml++-devel libao-devel libvorbis-devel libogg-devel
