@@ -58,10 +58,6 @@ rm -rf $RPM_BUILD_ROOT
 %makeinstall
 
 #menu
-mkdir -p $RPM_BUILD_ROOT%{_menudir}
-cat << EOF > $RPM_BUILD_ROOT%{_menudir}/%{name}
-?package(%{name}): command="%{name}" icon="%{name}.png" needs="x11" title="Gnomoradio" longtitle="Find and play freely shared music" section="Multimedia/Sound" xdg="true"
-EOF
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
@@ -103,7 +99,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_sbindir}/rainbow-hub
 %{_datadir}/applications/%name.desktop
 %{_datadir}/pixmaps/*
-%{_menudir}/%name
 %{_liconsdir}/%name.png
 %{_iconsdir}/%name.png
 %{_miconsdir}/%name.png
