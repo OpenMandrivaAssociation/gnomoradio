@@ -82,11 +82,15 @@ convert -size 16x16 %name/%name.png $RPM_BUILD_ROOT/%_miconsdir/%name.png
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%if %mdkversion < 200900
 %post
 %update_menus
+%endif
 		
+%if %mdkversion < 200900
 %postun
 %clean_menus
+%endif
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
