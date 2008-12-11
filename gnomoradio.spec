@@ -15,7 +15,7 @@ URL:		http://gnomoradio.org/
 License:	GPL
 Group:		Sound
 BuildRoot:	%{_tmppath}/%{name}-buildroot
-BuildRequires:	pkgconfig ImageMagick
+BuildRequires:	pkgconfig imagemagick
 BuildRequires:	libsigc++2.0-devel gtkmm2.4-devel gconfmm2.6-devel
 BuildRequires:	libxml++-devel libao-devel libvorbis-devel libogg-devel
 BuildRequires:  desktop-file-utils
