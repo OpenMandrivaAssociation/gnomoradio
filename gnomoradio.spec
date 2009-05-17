@@ -1,23 +1,34 @@
 %define name	gnomoradio
 %define version	0.15.1
-%define release %mkrel 6
+%define release %mkrel 7
 
 %define major	0
-%define libname %mklibname %name %major
+%define libname %mklibname %{name} %{major}
 
 Name: 	 	%{name}
 Summary: 	Finder and player of free (Creative Commons) music
 Version: 	%{version}
 Release: 	%{release}
-
 Source:		%{name}-%{version}.tar.bz2
+# patches from Gentoo
+Patch0:		gnomoradio-0.15.1-gcc42.patch
+Patch1:		gnomoradio-0.15.1-gcc43.patch
+# -------------------
+Patch2:		gnomoradio-0.15.1-fix-underlinking.patch
 URL:		http://gnomoradio.org/
-License:	GPL
+License:	GPLv2+
 Group:		Sound
 BuildRoot:	%{_tmppath}/%{name}-buildroot
-BuildRequires:	pkgconfig imagemagick
-BuildRequires:	libsigc++2.0-devel gtkmm2.4-devel gconfmm2.6-devel
-BuildRequires:	libxml++-devel libao-devel libvorbis-devel libogg-devel
+
+BuildRequires:	pkgconfig
+BuildRequires:	imagemagick
+BuildRequires:	libsigc++2.0-devel
+BuildRequires:	gtkmm2.4-devel
+BuildRequires:	gconfmm2.6-devel
+BuildRequires:	libxml++-devel
+BuildRequires:	libao-devel
+BuildRequires:	libvorbis-devel
+BuildRequires:	libogg-devel
 BuildRequires:  desktop-file-utils
 
 %description
@@ -29,32 +40,35 @@ music industry, musicians now have a chance to interact directly with their
 listeners and receive valuable exposure.
 
 %package -n 	%{libname}
-Summary:        Dynamic libraries from %name
+Summary:        Dynamic libraries from %{name}
 Group:          System/Libraries
 
 %description -n %{libname}
-Dynamic libraries from %name.
+Dynamic libraries from %{name}.
 
 %package -n 	%{libname}-devel
-Summary: 	Header files and static libraries from %name
+Summary: 	Header files and static libraries from %{name}
 Group: 		Development/C
 Requires: 	%{libname} >= %{version}
 Provides: 	lib%{name}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release} 
-Obsoletes: 	%name-devel
+Obsoletes: 	%{name}-devel
 
 %description -n %{libname}-devel
-Libraries and includes files for developing programs based on %name.
+Libraries and includes files for developing programs based on %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %configure2_5x
 %make
 										
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %makeinstall
 
 #menu
@@ -67,20 +81,20 @@ desktop-file-install --vendor="" \
   --add-category="AudioVideo" \
   --add-category="Audio" \
   --add-category="Player" \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
+  --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
 
 #icons
-mkdir -p $RPM_BUILD_ROOT/%_liconsdir
-convert -size 48x48 %name/%name.png $RPM_BUILD_ROOT/%_liconsdir/%name.png
-mkdir -p $RPM_BUILD_ROOT/%_iconsdir
-convert -size 32x32 %name/%name.png $RPM_BUILD_ROOT/%_iconsdir/%name.png
-mkdir -p $RPM_BUILD_ROOT/%_miconsdir
-convert -size 16x16 %name/%name.png $RPM_BUILD_ROOT/%_miconsdir/%name.png
+mkdir -p %{buildroot}/%{_liconsdir}
+convert -size 48x48 %{name}/%{name}.png %{buildroot}/%{_liconsdir}/%{name}.png
+mkdir -p %{buildroot}/%{_iconsdir}
+convert -size 32x32 %{name}/%{name}.png %{buildroot}/%{_iconsdir}/%{name}.png
+mkdir -p %{buildroot}/%{_miconsdir}
+convert -size 16x16 %{name}/%{name}.png %{buildroot}/%{_miconsdir}/%{name}.png
 
-%find_lang %name
+%find_lang %{name}
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %if %mdkversion < 200900
 %post
@@ -101,15 +115,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(-,root,root)
-%doc AUTHORS ChangeLog README NEWS TODO
-%{_bindir}/%name
+%doc AUTHORS README NEWS TODO
+%{_bindir}/%{name}
 %{_bindir}/rainbow-get
 %{_sbindir}/rainbow-hub
-%{_datadir}/applications/%name.desktop
+%{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
-%{_liconsdir}/%name.png
-%{_iconsdir}/%name.png
-%{_miconsdir}/%name.png
+%{_liconsdir}/%{name}.png
+%{_iconsdir}/%{name}.png
+%{_miconsdir}/%{name}.png
 
 %files -n %{libname}
 %defattr(-,root,root)
