@@ -1,6 +1,6 @@
 %define name	gnomoradio
 %define version	0.15.1
-%define release %mkrel 8
+%define release %mkrel 9
 
 %define major	0
 %define libname %mklibname %{name} %{major}
