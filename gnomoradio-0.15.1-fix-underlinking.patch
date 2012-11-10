@@ -1,0 +1,35 @@
+diff -uNr gnomoradio-0.15.1.ori/roboradio/Makefile.in gnomoradio-0.15.1/roboradio/Makefile.in
+--- gnomoradio-0.15.1.ori/roboradio/Makefile.in	2009-05-17 04:03:11.000000000 +0200
++++ gnomoradio-0.15.1/roboradio/Makefile.in	2009-05-17 04:05:04.000000000 +0200
+@@ -271,6 +271,8 @@
+ 			  xspf.cc
+ 
+ libroboradio_la_LIBADD = ./audio/libroboradio-audio.la \
++			 `pkg-config glibmm-2.4 --libs` \
++			 `pkg-config libxml++-2.6 --libs` \
+ 			 $(top_builddir)/rainbow/librainbow.la
+ 
+ all: all-recursive
+diff -uNr gnomoradio-0.15.1.ori/roboradio/audio/Makefile.in gnomoradio-0.15.1/roboradio/audio/Makefile.in
+--- gnomoradio-0.15.1.ori/roboradio/audio/Makefile.in	2009-05-17 04:03:11.000000000 +0200
++++ gnomoradio-0.15.1/roboradio/audio/Makefile.in	2009-05-17 04:04:57.000000000 +0200
+@@ -206,6 +206,7 @@
+ 				ogg.cc
+ 
+ libroboradio_audio_la_LIBADD = ../mp3/libroboradio-mp3.la \
++			       `pkg-config gthread-2.0 --libs` \
+ 			       $(ROBORADIO_LIBS) \
+ 			       $(VORBISFILE_LIBS) \
+ 			       $(VORBIS_LIBS) \
+diff -uNr gnomoradio-0.15.1.ori/roboradio/mp3/Makefile.in gnomoradio-0.15.1/roboradio/mp3/Makefile.in
+--- gnomoradio-0.15.1.ori/roboradio/mp3/Makefile.in	2009-05-17 04:03:11.000000000 +0200
++++ gnomoradio-0.15.1/roboradio/mp3/Makefile.in	2009-05-17 04:04:47.000000000 +0200
+@@ -253,7 +253,7 @@
+ 	$(optimized_source)
+ 
+ libroboradio_mp3_la_LIBADD = -lpthread \
+-			     $(ROBORADIO_LIBS) \
++			     $(ROBORADIO_LIBS) -lm \
+ 			     $(AO_LIBS)
+ 
+ EXTRA_DIST = $(platform_source)			\
