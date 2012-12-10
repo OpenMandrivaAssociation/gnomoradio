@@ -68,4 +68,3 @@ Index: gnomoradio-0.15.1/rainbow/rdf-resource.cc
  	for (signal = signal_map.begin(); signal != signal_map.end(); ++signal)
  		delete signal->second;
  	signal_map.clear();
-

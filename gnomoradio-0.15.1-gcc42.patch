@@ -20,4 +20,3 @@ diff -ur gnomoradio-0.15.1.orig/roboradio/state.cc gnomoradio-0.15.1/roboradio/s
  
  #include <map>
  #include <set>
-

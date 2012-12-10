@@ -9,26 +9,25 @@ Name: 	 	%{name}
 Summary: 	Finder and player of free (Creative Commons) music
 Version: 	%{version}
 Release: 	%{release}
-Source:		%{name}-%{version}.tar.bz2
+Source0:	%{name}-%{version}.tar.bz2
 # patches from Gentoo
 Patch0:		gnomoradio-0.15.1-gcc42.patch
 Patch1:		gnomoradio-0.15.1-gcc43.patch
 # -------------------
 Patch2:		gnomoradio-0.15.1-fix-underlinking.patch
+Patch3:		gnomoradio-0.15.1-glib-single-include.patch
+Patch4:		gnomoradio-0.15.1-lm.patch
 URL:		http://gnomoradio.org/
 License:	GPLv2+
 Group:		Sound
-BuildRoot:	%{_tmppath}/%{name}-buildroot
-
-BuildRequires:	pkgconfig
 BuildRequires:	imagemagick
 BuildRequires:	libsigc++2.0-devel
-BuildRequires:	gtkmm2.4-devel
+BuildRequires:	pkgconfig(gtkmm-2.4)
 BuildRequires:	gconfmm2.6-devel
-BuildRequires:	libxml++-devel
-BuildRequires:	libao-devel
-BuildRequires:	libvorbis-devel
-BuildRequires:	libogg-devel
+BuildRequires:	pkgconfig(libxml++-2.6)
+BuildRequires:	pkgconfig(ao)
+BuildRequires:	pkgconfig(vorbis)
+BuildRequires:	pkgconfig(ogg)
 BuildRequires:  desktop-file-utils
 
 %description
@@ -62,13 +61,14 @@ Libraries and includes files for developing programs based on %{name}.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 %configure2_5x
-%make
+%make LIBS="-lglibmm-2.4 -lsigc-2.0"
 										
 %install
-rm -rf %{buildroot}
 %makeinstall
 
 #menu
@@ -91,30 +91,10 @@ convert -size 32x32 %{name}/%{name}.png %{buildroot}/%{_iconsdir}/%{name}.png
 mkdir -p %{buildroot}/%{_miconsdir}
 convert -size 16x16 %{name}/%{name}.png %{buildroot}/%{_miconsdir}/%{name}.png
 
-%find_lang %{name}
+#%find_lang %{name}
 
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post
-%update_menus
-%endif
-		
-%if %mdkversion < 200900
-%postun
-%clean_menus
-%endif
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%files -f %{name}.lang
-%defattr(-,root,root)
+%files 
+#-f %{name}.lang
 %doc AUTHORS README NEWS TODO
 %{_bindir}/%{name}
 %{_bindir}/rainbow-get
@@ -126,14 +106,9 @@ rm -rf %{buildroot}
 %{_miconsdir}/%{name}.png
 
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/*.so.*
 
 %files -n %{libname}-devel
-%defattr(-,root,root)
 %{_includedir}/rainbow
 %{_includedir}/roboradio
 %{_libdir}/*.so
-#%{_libdir}/*.a
-%{_libdir}/*.la
-
