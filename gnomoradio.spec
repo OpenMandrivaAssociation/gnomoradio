@@ -8,7 +8,7 @@
 Summary:	Finder and player of free (Creative Commons) music
 Name:		gnomoradio
 Version:	0.15.1
-Release:	10
+Release:	11
 License:	GPLv2+
 Group:		Sound
 Url:		http://gnomoradio.org/
