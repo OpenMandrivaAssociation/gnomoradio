@@ -11,7 +11,7 @@ Version:	0.15.1
 Release:	11
 License:	GPLv2+
 Group:		Sound
-Url:		http://gnomoradio.org/
+Url:		https://gnomoradio.org/
 Source0:	%{name}-%{version}.tar.bz2
 # patches from Gentoo
 Patch0:		gnomoradio-0.15.1-gcc42.patch
