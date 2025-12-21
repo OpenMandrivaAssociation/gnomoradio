@@ -20,6 +20,11 @@ Patch1:		gnomoradio-0.15.1-gcc43.patch
 Patch2:		gnomoradio-0.15.1-fix-underlinking.patch
 Patch3:		gnomoradio-0.15.1-glib-single-include.patch
 Patch4:		gnomoradio-0.15.1-lm.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	desktop-file-utils
 BuildRequires:	imagemagick
 BuildRequires:	pkgconfig(ao)
